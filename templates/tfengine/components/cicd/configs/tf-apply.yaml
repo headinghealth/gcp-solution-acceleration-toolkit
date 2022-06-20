@@ -31,13 +31,13 @@ steps:
 
   - name: "{{$cft}}"
     entrypoint: bash
-    args: ["./cicd/configs/import.sh", "-d", "${_MANAGED_DIRS}"]
+    args: ["./project-devops-cicd/configs/import.sh", "-d", "${_MANAGED_DIRS}"]
     dir: "${_TERRAFORM_ROOT}"
     id: Import existing projects
 
   - name: "{{$cft}}"
     entrypoint: bash
-    args: ["./cicd/configs/run.sh", "-d", "${_MANAGED_DIRS}", "-a", "init", "-a", "plan -out=plan.tfplan -input=false", "-a", "apply -input=false plan.tfplan"]
+    args: ["./project-devops-cicd/configs/run.sh", "-d", "${_MANAGED_DIRS}", "-a", "init", "-a", "plan -out=plan.tfplan -input=false", "-a", "apply -input=false plan.tfplan"]
     dir: "${_TERRAFORM_ROOT}"
     id: Apply
 

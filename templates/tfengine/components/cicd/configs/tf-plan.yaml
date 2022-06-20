@@ -31,14 +31,14 @@ steps:
 
   - name: "{{$cft}}"
     entrypoint: bash
-    args: ["./cicd/configs/run.sh", "-d", "${_MANAGED_DIRS}", "-a", "init -lock=false", "-a", "plan -lock=false -out=plan.tfplan"]
+    args: ["./project-devops-cicd/configs/run.sh", "-d", "${_MANAGED_DIRS}", "-a", "init -lock=false", "-a", "plan -lock=false -out=plan.tfplan"]
     dir: "${_TERRAFORM_ROOT}"
     id: Speculative plan
 
   # Check for delete operations as an FYI, it won't fail the build.
   - name: "{{$cft}}"
     entrypoint: bash
-    args: ["./cicd/configs/tf-deletion-check.sh", "./cicd/configs/tf-deletion-allowlist.txt"]
+    args: ["./project-devops-cicd/configs/tf-deletion-check.sh", "./project-devops-cicd/configs/tf-deletion-allowlist.txt"]
     dir: "${_TERRAFORM_ROOT}"
     id: Resource deletion check
 

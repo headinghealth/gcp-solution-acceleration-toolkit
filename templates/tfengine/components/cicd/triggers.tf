@@ -66,7 +66,7 @@ resource "google_cloudbuild_trigger" "validate_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "{{$terraform_root_prefix}}cicd/configs/tf-validate.yaml"
+  filename = "{{$terraform_root_prefix}}project-devops-cicd/configs/tf-validate.yaml"
 
   substitutions = {
     _TERRAFORM_ROOT = "{{$terraform_root}}"
@@ -114,7 +114,7 @@ resource "google_cloudbuild_trigger" "validate_scheduled_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "{{$terraform_root_prefix}}cicd/configs/tf-validate.yaml"
+  filename = "{{$terraform_root_prefix}}project-devops-cicd/configs/tf-validate.yaml"
 
   substitutions = {
     _TERRAFORM_ROOT = "{{$terraform_root}}"
@@ -186,7 +186,7 @@ resource "google_cloudbuild_trigger" "plan_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "{{$terraform_root_prefix}}cicd/configs/tf-plan.yaml"
+  filename = "{{$terraform_root_prefix}}project-devops-cicd/configs/tf-plan.yaml"
 
   substitutions = {
     _TERRAFORM_ROOT = "{{$terraform_root}}"
@@ -234,7 +234,7 @@ resource "google_cloudbuild_trigger" "plan_scheduled_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "{{$terraform_root_prefix}}cicd/configs/tf-plan.yaml"
+  filename = "{{$terraform_root_prefix}}project-devops-cicd/configs/tf-plan.yaml"
 
   substitutions = {
     _TERRAFORM_ROOT = "{{$terraform_root}}"
@@ -306,7 +306,7 @@ resource "google_cloudbuild_trigger" "apply_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "{{$terraform_root_prefix}}cicd/configs/tf-apply.yaml"
+  filename = "{{$terraform_root_prefix}}project-devops-cicd/configs/tf-apply.yaml"
 
   substitutions = {
     _TERRAFORM_ROOT = "{{$terraform_root}}"

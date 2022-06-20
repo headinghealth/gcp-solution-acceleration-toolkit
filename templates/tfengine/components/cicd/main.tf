@@ -51,6 +51,7 @@ locals {
     "bigquery.googleapis.com",
     "cloudbilling.googleapis.com",
     "cloudbuild.googleapis.com",
+    "cloudidentity.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
     "iam.googleapis.com",
@@ -68,6 +69,7 @@ locals {
   cloudbuild_sa_viewer_roles = [
     "roles/browser",
     "roles/iam.securityReviewer",
+    "roles/resourcemanager.organizationViewer",
     "roles/secretmanager.secretViewer",
     "roles/secretmanager.secretAccessor",
   ]

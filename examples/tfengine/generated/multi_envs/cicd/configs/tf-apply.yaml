@@ -30,13 +30,13 @@ steps:
 
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools-light@sha256:d881ce4ff2a73fa0877dd357af798a431a601b2ccfe5a140837bcb883cd3f011"
     entrypoint: bash
-    args: ["./cicd/configs/import.sh", "-d", "${_MANAGED_DIRS}"]
+    args: ["./project-devops-cicd/configs/import.sh", "-d", "${_MANAGED_DIRS}"]
     dir: "${_TERRAFORM_ROOT}"
     id: Import existing projects
 
   - name: "gcr.io/cloud-foundation-cicd/cft/developer-tools-light@sha256:d881ce4ff2a73fa0877dd357af798a431a601b2ccfe5a140837bcb883cd3f011"
     entrypoint: bash
-    args: ["./cicd/configs/run.sh", "-d", "${_MANAGED_DIRS}", "-a", "init", "-a", "plan -out=plan.tfplan -input=false", "-a", "apply -input=false plan.tfplan"]
+    args: ["./project-devops-cicd/configs/run.sh", "-d", "${_MANAGED_DIRS}", "-a", "init", "-a", "plan -out=plan.tfplan -input=false", "-a", "apply -input=false plan.tfplan"]
     dir: "${_TERRAFORM_ROOT}"
     id: Apply
 
