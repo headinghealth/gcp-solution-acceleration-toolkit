@@ -73,3 +73,19 @@ module "project" {
   {{end -}}
 }
 {{- end}}
+
+{{- if has . "allowed_policy_member_customer_ids"}}
+# Cloud Identity and Access Management
+module "orgpolicy_iam_allowed_policy_member_domains" {
+  source  = "terraform-google-modules/org-policy/google"
+  version = "~> 5.0.0"
+
+  policy_for = "project"
+  project_id = "{{.project_id}}"
+
+  constraint        = "constraints/iam.allowedPolicyMemberDomains"
+  policy_type       = "list"
+  allow             = {{hcl .allowed_policy_member_customer_ids}}
+  allow_list_length = length({{hcl .allowed_policy_member_customer_ids}})
+}
+{{- end}}

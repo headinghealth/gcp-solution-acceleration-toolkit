@@ -143,6 +143,17 @@ schema = {
             ".+" = { type = "string" }
           }
         }
+        allowed_policy_member_customer_ids = {
+          description = <<EOF
+            See templates/policygen/org_policies/variables.tf. Must be specified to restrict
+            domain members that can be assigned IAM roles. Obtain the ID by following
+            <https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains#retrieving_customer_id>.
+          EOF
+          type        = "array"
+          items = {
+            type = "string"
+          }
+        }
       }
     }
     resources = {
