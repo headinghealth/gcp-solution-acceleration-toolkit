@@ -89,3 +89,18 @@ module "orgpolicy_iam_allowed_policy_member_domains" {
   allow_list_length = length({{hcl .allowed_policy_member_customer_ids}})
 }
 {{- end}}
+
+{{- if has . "disable_service_account_key_creation"}}
+# https://medium.com/@jryancanty/stop-downloading-google-cloud-service-account-keys-1811d44a97d9
+module "orgpolicy_disable_service_account_key_creation" {
+  source  = "terraform-google-modules/org-policy/google"
+  version = "~> 5.0.0"
+
+  policy_for = "project"
+  project_id = "{{.project_id}}"
+
+  constraint  = "constraints/iam.disableServiceAccountKeyCreation"
+  policy_type = "boolean"
+  enforce     = {{hcl .disable_service_account_key_creation}}
+}
+{{- end}}
