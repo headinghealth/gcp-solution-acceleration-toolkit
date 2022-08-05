@@ -14,10 +14,6 @@ limitations under the License. */ -}}
 
 {{- range get . "envs" -}}
 # ================== Triggers for "{{.name}}" environment ==================
-{{- $managed_dirs := ""}}
-{{- range .managed_dirs}}
-{{- $managed_dirs = trimSpace (printf "%s %s" $managed_dirs .)}}
-{{- end}}
 
 {{- $worker_pool := ""}}
 {{- if has . "worker_pool"}}
