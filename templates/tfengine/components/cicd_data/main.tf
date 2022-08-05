@@ -12,13 +12,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. */ -}}
 
-# This folder contains Terraform resources to setup CI/CD, which includes:
-# - Necessary APIs to enable in the devops project for CI/CD purposes,
-# - Necessary IAM permissions to set to enable Cloud Build Service Account perform CI/CD jobs.
-# - Cloud Build Triggers to monitor GitHub repos to start CI/CD jobs.
-#
-# The Cloud Build configs can be found under the configs/ sub-folder.
-
 # ***NOTE***: First follow
 # https://cloud.google.com/cloud-build/docs/automating-builds/create-github-app-triggers#installing_the_cloud_build_app
 # to install the Cloud Build app and connect your GitHub repository to your Cloud project.
@@ -30,7 +23,7 @@ limitations under the License. */ -}}
   {{- end}}
 {{- end}}
 
-data "google_project" "devops" {
+data "google_project" "analytics" {
   project_id = var.project_id
 }
 
@@ -45,9 +38,6 @@ locals {
   services = [
     "bigquery.googleapis.com",
     "cloudbuild.googleapis.com",
-    "cloudresourcemanager.googleapis.com",
-    "compute.googleapis.com",
-    "iam.googleapis.com",
 {{- if $hasScheduledJobs}}
     "appengine.googleapis.com",
     "cloudscheduler.googleapis.com",
@@ -57,7 +47,7 @@ locals {
   ]
   cloudbuild_sa_editor_roles = [
   ]
-  cloudbuild_devops_roles = [
+  cloudbuild_sa_roles = [
     # Allow Cloud Build SA to run queries and write logs.
     "roles/bigquery.dataEditor",
     "roles/bigquery.jobUser",
@@ -148,9 +138,9 @@ resource "google_project_iam_member" "cloudbuild_logs_viewers" {
 }
 
 
-# Grant Cloud Build Service Account access to the devops project.
+# Grant Cloud Build Service Account access to the analytics project.
 resource "google_project_iam_member" "cloudbuild_sa_project_iam" {
-  for_each = toset(local.cloudbuild_devops_roles)
+  for_each = toset(local.cloudbuild_sa_roles)
   project  = var.project_id
   role     = each.key
   member   = "serviceAccount:${local.cloudbuild_sa_email}"

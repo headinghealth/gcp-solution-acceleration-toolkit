@@ -31,7 +31,7 @@ resource "google_cloudbuild_trigger" "test_{{.name}}" {
   disabled    = true
   {{- end}}
   project     = var.project_id
-  name        = "tf-test-{{.name}}"
+  name        = "analytics-test-{{.name}}"
   description = "Test job triggered on push event."
 
   included_files = [
@@ -50,7 +50,7 @@ resource "google_cloudbuild_trigger" "test_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "./cloudbuild.yaml"
+  filename = "./cloudbuild-test.yaml"
 
   substitutions = {
     _DBT_TARGET = "dev"
@@ -71,7 +71,7 @@ resource "google_cloudbuild_trigger" "test_scheduled_{{.name}}" {
   # Always disabled on push to branch.
   disabled    = true
   project     = var.project_id
-  name        = "tf-test-scheduled-{{.name}}"
+  name        = "analytics-test-scheduled-{{.name}}"
   description = "Test job triggered on schedule."
 
   included_files = [
@@ -90,7 +90,7 @@ resource "google_cloudbuild_trigger" "test_scheduled_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "./cloudbuild.yaml"
+  filename = "./cloudbuild-test.yaml"
 
   substitutions = {
     _DBT_TARGET = "dev"
@@ -135,7 +135,7 @@ resource "google_cloudbuild_trigger" "run_{{.name}}" {
   disabled    = true
   {{- end}}
   project     = var.project_id
-  name        = "tf-run-{{.name}}"
+  name        = "analytics-run-{{.name}}"
   description = "Run job triggered on push event."
 
   included_files = [
@@ -154,7 +154,7 @@ resource "google_cloudbuild_trigger" "run_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "./cloudbuild.yaml"
+  filename = "./cloudbuild-run.yaml"
 
   substitutions = {
     _DBT_TARGET = "dev"
@@ -175,7 +175,7 @@ resource "google_cloudbuild_trigger" "run_scheduled_{{.name}}" {
   # Always disabled on push to branch.
   disabled    = true
   project     = var.project_id
-  name        = "tf-run-scheduled-{{.name}}"
+  name        = "analytics-run-scheduled-{{.name}}"
   description = "Run job triggered on schedule."
 
   included_files = [
@@ -194,7 +194,7 @@ resource "google_cloudbuild_trigger" "run_scheduled_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "./cloudbuild.yaml"
+  filename = "./cloudbuild-run.yaml"
 
   substitutions = {
     _DBT_TARGET = "dev"
