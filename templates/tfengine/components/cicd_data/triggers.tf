@@ -31,7 +31,7 @@ resource "google_cloudbuild_trigger" "test_{{.name}}" {
   description = "Test job triggered on push event."
 
   included_files = [
-    "./**",
+    "**",
   ]
 
   {{if has $ "github" -}}
@@ -46,7 +46,7 @@ resource "google_cloudbuild_trigger" "test_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "./cloudbuild-test.yaml"
+  filename = "cloudbuild-test.yml"
 
   substitutions = {
     _DBT_TARGET = "dev"
@@ -71,7 +71,7 @@ resource "google_cloudbuild_trigger" "test_scheduled_{{.name}}" {
   description = "Test job triggered on schedule."
 
   included_files = [
-    "./**",
+    "**",
   ]
 
   {{if has $ "github" -}}
@@ -86,7 +86,7 @@ resource "google_cloudbuild_trigger" "test_scheduled_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "./cloudbuild-test.yaml"
+  filename = "cloudbuild-test.yml"
 
   substitutions = {
     _DBT_TARGET = "dev"
@@ -135,7 +135,7 @@ resource "google_cloudbuild_trigger" "run_{{.name}}" {
   description = "Run job triggered on push event."
 
   included_files = [
-    "./**",
+    "**",
   ]
 
   {{if has $ "github" -}}
@@ -150,7 +150,7 @@ resource "google_cloudbuild_trigger" "run_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "./cloudbuild-run.yaml"
+  filename = "cloudbuild-run.yml"
 
   substitutions = {
     _DBT_TARGET = "dev"
@@ -175,7 +175,7 @@ resource "google_cloudbuild_trigger" "run_scheduled_{{.name}}" {
   description = "Run job triggered on schedule."
 
   included_files = [
-    "./**",
+    "**",
   ]
 
   {{if has $ "github" -}}
@@ -190,7 +190,7 @@ resource "google_cloudbuild_trigger" "run_scheduled_{{.name}}" {
 
   service_account = "projects/${var.project_id}/serviceAccounts/${local.cloudbuild_sa_email}"
 
-  filename = "./cloudbuild-run.yaml"
+  filename = "cloudbuild-run.yml"
 
   substitutions = {
     _DBT_TARGET = "dev"
