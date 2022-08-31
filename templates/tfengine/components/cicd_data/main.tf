@@ -38,6 +38,7 @@ locals {
   services = [
     "bigquery.googleapis.com",
     "cloudbuild.googleapis.com",
+    "iam.googleapis.com",
 {{- if $hasScheduledJobs}}
     "appengine.googleapis.com",
     "cloudscheduler.googleapis.com",
@@ -205,7 +206,7 @@ module "logs_bucket" {
 # IAM permissions to allow Cloud Build SA to access logs bucket.
 resource "google_storage_bucket_iam_member" "cloudbuild_logs_bucket_iam" {
   bucket = module.logs_bucket.bucket.name
-  role   = "roles/storage.objectAdmin"
+  role   = "roles/storage.admin"
   member = "serviceAccount:${local.cloudbuild_sa_email}"
   depends_on = [
     google_project_service.services,
