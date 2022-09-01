@@ -181,6 +181,17 @@ resource "google_project_iam_member" "cloudbuild_scheduler_sa_project_iam" {
     google_project_service.services,
   ]
 }
+
+# additional role required to start cloudbuild now
+resource "google_project_iam_member" "cloudbuild_scheduler_sa_project_iam_extra" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.cloudbuild_scheduler_sa.email}"
+  depends_on = [
+    google_project_service.services,
+  ]
+}
+
 {{- end}}
 
 {{- if not (get .service_account "exists" false)}}

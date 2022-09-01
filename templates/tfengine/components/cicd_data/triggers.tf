@@ -49,9 +49,6 @@ resource "google_cloudbuild_trigger" "test_{{.name}}" {
   filename = "cloudbuild-test.yml"
 
   substitutions = {
-    _DBT_TARGET = "dev"
-    _DBT_VERSION = "1.2.0"
-    _WORKER_POOL = "{{$worker_pool}}"
     _LOGS_BUCKET = "gs://${module.logs_bucket.bucket.name}"
   }
 
@@ -89,9 +86,6 @@ resource "google_cloudbuild_trigger" "test_scheduled_{{.name}}" {
   filename = "cloudbuild-test.yml"
 
   substitutions = {
-    _DBT_TARGET = "dev"
-    _DBT_VERSION = "1.2.0"
-    _WORKER_POOL = "{{$worker_pool}}"
     _LOGS_BUCKET = "gs://${module.logs_bucket.bucket.name}"
   }
 
@@ -103,9 +97,9 @@ resource "google_cloudbuild_trigger" "test_scheduled_{{.name}}" {
 resource "google_cloud_scheduler_job" "test_scheduler_{{.name}}" {
   project   = var.project_id
   name      = "test-scheduler-{{.name}}"
-  region    = "{{$.scheduler_region}}"
+  region    = "{{$.scheduler_region}}1" # 1 postfix hardcoded here to compensate for appengine region naming
   schedule  = "{{.triggers.test.run_on_schedule}}"
-  time_zone = "America/New_York" # Eastern Standard Time (EST)
+  time_zone = "Europe/London" # Keep UK to simplify the spreadsheets updates sync
   attempt_deadline = "60s"
   http_target {
     http_method = "POST"
@@ -142,7 +136,7 @@ resource "google_cloudbuild_trigger" "run_{{.name}}" {
   github {
     owner = "{{$.github.owner}}"
     name  = "{{$.github.name}}"
-    pull_request {
+    push {
       branch = "^{{.branch_name}}$"
     }
   }
@@ -153,9 +147,6 @@ resource "google_cloudbuild_trigger" "run_{{.name}}" {
   filename = "cloudbuild-run.yml"
 
   substitutions = {
-    _DBT_TARGET = "dev"
-    _DBT_VERSION = "1.2.0"
-    _WORKER_POOL = "{{$worker_pool}}"
     _LOGS_BUCKET = "gs://${module.logs_bucket.bucket.name}"
   }
 
@@ -193,9 +184,6 @@ resource "google_cloudbuild_trigger" "run_scheduled_{{.name}}" {
   filename = "cloudbuild-run.yml"
 
   substitutions = {
-    _DBT_TARGET = "dev"
-    _DBT_VERSION = "1.2.0"
-    _WORKER_POOL = "{{$worker_pool}}"
     _LOGS_BUCKET = "gs://${module.logs_bucket.bucket.name}"
   }
 
@@ -207,9 +195,9 @@ resource "google_cloudbuild_trigger" "run_scheduled_{{.name}}" {
 resource "google_cloud_scheduler_job" "run_scheduler_{{.name}}" {
   project   = var.project_id
   name      = "run-scheduler-{{.name}}"
-  region    = "{{$.scheduler_region}}"
+  region    = "{{$.scheduler_region}}1" # 1 postfix hardcoded here to compensate for appengine region naming
   schedule  = "{{.triggers.run.run_on_schedule}}"
-  time_zone = "America/New_York" # Eastern Standard Time (EST)
+  time_zone = "Europe/London" # Keep UK to simplify the spreadsheets updates sync
   attempt_deadline = "60s"
   http_target {
     http_method = "POST"
