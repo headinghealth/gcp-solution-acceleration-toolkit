@@ -104,7 +104,7 @@ resource "google_cloud_scheduler_job" "test_scheduler_{{.name}}" {
   http_target {
     http_method = "POST"
     oauth_token {
-      scope = "https://www.googleapis.com/auth/cloud-platform"
+      scope = "https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive.readonly"
       service_account_email = "${google_service_account.cloudbuild_scheduler_sa.email}"
     }
     uri = "https://cloudbuild.googleapis.com/v1/${google_cloudbuild_trigger.test_scheduled_{{.name}}.id}:run"
@@ -202,7 +202,7 @@ resource "google_cloud_scheduler_job" "run_scheduler_{{.name}}" {
   http_target {
     http_method = "POST"
     oauth_token {
-      scope = "https://www.googleapis.com/auth/cloud-platform"
+      scope = "https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive.readonly"
       service_account_email = "${google_service_account.cloudbuild_scheduler_sa.email}"
     }
     uri = "https://cloudbuild.googleapis.com/v1/${google_cloudbuild_trigger.run_scheduled_{{.name}}.id}:run"
