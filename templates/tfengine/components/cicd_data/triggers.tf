@@ -28,7 +28,7 @@ resource "google_cloudbuild_trigger" "test_{{.name}}" {
   {{- end}}
   project     = var.project_id
   name        = "analytics-test-{{.name}}"
-  description = "Test job triggered on push event."
+  description = "Test job triggered on PR"
 
   included_files = [
     "**",
@@ -65,7 +65,7 @@ resource "google_cloudbuild_trigger" "test_scheduled_{{.name}}" {
   disabled    = true
   project     = var.project_id
   name        = "analytics-test-scheduled-{{.name}}"
-  description = "Test job triggered on schedule."
+  description = "Test job triggered on schedule"
 
   included_files = [
     "**",
@@ -104,7 +104,7 @@ resource "google_cloud_scheduler_job" "test_scheduler_{{.name}}" {
   http_target {
     http_method = "POST"
     oauth_token {
-      scope = "https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive.readonly"
+      scope = "https://www.googleapis.com/auth/cloud-platform"
       service_account_email = "${google_service_account.cloudbuild_scheduler_sa.email}"
     }
     uri = "https://cloudbuild.googleapis.com/v1/${google_cloudbuild_trigger.test_scheduled_{{.name}}.id}:run"
@@ -126,7 +126,7 @@ resource "google_cloudbuild_trigger" "run_{{.name}}" {
   {{- end}}
   project     = var.project_id
   name        = "analytics-run-{{.name}}"
-  description = "Run job triggered on push event."
+  description = "Run job triggered on push event"
 
   included_files = [
     "**",
@@ -163,7 +163,7 @@ resource "google_cloudbuild_trigger" "run_scheduled_{{.name}}" {
   disabled    = true
   project     = var.project_id
   name        = "analytics-run-scheduled-{{.name}}"
-  description = "Run job triggered on schedule."
+  description = "Run job triggered on schedule"
 
   included_files = [
     "**",
@@ -202,7 +202,7 @@ resource "google_cloud_scheduler_job" "run_scheduler_{{.name}}" {
   http_target {
     http_method = "POST"
     oauth_token {
-      scope = "https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive.readonly"
+      scope = "https://www.googleapis.com/auth/cloud-platform"
       service_account_email = "${google_service_account.cloudbuild_scheduler_sa.email}"
     }
     uri = "https://cloudbuild.googleapis.com/v1/${google_cloudbuild_trigger.run_scheduled_{{.name}}.id}:run"

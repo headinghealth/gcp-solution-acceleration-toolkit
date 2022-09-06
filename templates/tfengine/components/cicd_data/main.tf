@@ -49,9 +49,8 @@ locals {
   cloudbuild_sa_editor_roles = [
   ]
   cloudbuild_sa_roles = [
-    # Allow Cloud Build SA to run queries and write logs.
-    "roles/bigquery.dataEditor",
-    "roles/bigquery.jobUser",
+    # Allow Cloud Build SA to be cloudbuild-dbt-run-sa and write logs.
+    "roles/iam.serviceAccountTokenCreator",
     "roles/logging.logWriter"
   ]
 }
