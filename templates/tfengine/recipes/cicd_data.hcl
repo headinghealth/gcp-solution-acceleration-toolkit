@@ -197,6 +197,14 @@ schema = {
                   EOF
                     type        = "string"
                   }
+                  run_on_schedule_hourly = {
+                    description = <<EOF
+                    Whether or not to be automatically triggered according a specified schedule.
+                    The schedule is specified using [unix-cron format](https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule)
+                    at Eastern Standard Time (EST). Default to none.
+                  EOF
+                    type        = "string"
+                  }
                 }
               }
             }

@@ -214,6 +214,32 @@ resource "google_cloud_scheduler_job" "run_scheduler_{{.name}}" {
   ]
 }
 {{- end}}
+
+// HOURLY
+{{- if has .triggers.run "run_on_schedule_hourly"}}
+
+resource "google_cloud_scheduler_job" "run_scheduler_hourly_{{.name}}" {
+  project   = var.project_id
+  name      = "run-scheduler-hourly-{{.name}}"
+  region    = "{{$.scheduler_region}}1" # 1 postfix hardcoded here to compensate for appengine region naming
+  schedule  = "{{.triggers.run.run_on_schedule_hourly}}"
+  time_zone = "Europe/London" # Keep UK to simplify the spreadsheets updates sync
+  attempt_deadline = "60s"
+  http_target {
+    http_method = "POST"
+    oauth_token {
+      scope = "https://www.googleapis.com/auth/cloud-platform"
+      service_account_email = "${google_service_account.cloudbuild_scheduler_sa.email}"
+    }
+    uri = "https://cloudbuild.googleapis.com/v1/${google_cloudbuild_trigger.run_scheduled_{{.name}}.id}:run"
+    body = base64encode("{\"branchName\":\"{{.branch_name}}\"}")
+  }
+  depends_on = [
+    google_project_service.services,
+    google_app_engine_application.cloudbuild_scheduler_app,
+  ]
+}
+{{- end}}
 {{- end}}
 
 
