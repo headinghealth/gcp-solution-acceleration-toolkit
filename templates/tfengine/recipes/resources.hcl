@@ -500,7 +500,7 @@ schema = {
             type        = "array"
             items = {
               type                 = "object"
-              additionalProperties = true
+              additionalProperties = false
               required = [
                 "name",
                 "direction",
