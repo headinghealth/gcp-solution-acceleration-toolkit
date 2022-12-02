@@ -66,15 +66,15 @@ module "{{$resource_name}}" {
       {{- if has . "priority"}}
       priority                = "{{.priority}}"
       {{- end}}
-      ranges                  = "{{.ranges}}"
+      ranges                  = {{hcl .ranges}}
       {{- if has . "source_tags"}}
-      source_tags             = "{{.source_tags}}"
+      source_tags             = {{hcl .source_tags}}
       {{- end}}
       {{- if has . "source_service_accounts"}}
-      source_service_accounts = "{{.source_service_accounts}}"
+      source_service_accounts = {{hcl .source_service_accounts}}
       {{- end}}
       {{- if has . "target_tags"}}
-      target_tags             = "{{.target_tags}}"
+      target_tags             = {{hcl .target_tags}}
       {{- end}}
       {{- if has . "target_service_accounts"}}
       target_service_accounts = "{{.target_service_accounts}}"

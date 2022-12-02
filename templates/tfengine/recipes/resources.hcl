@@ -532,19 +532,31 @@ schema = {
                 }
                 source_tags = {
                   description = "Source tags."
-                  type         = "string"
+                  type        = "array"
+                  items = {
+                    type = "string"
+                  }
                 }
                 source_service_accounts = {
                   description = "Source service accounts."
-                  type         = "string"
+                  type        = "array"
+                  items = {
+                    type = "string"
+                  }
                 }
                 destination_tags = {
                   description = "Destination tags."
-                  type         = "string"
+                  type        = "array"
+                  items = {
+                    type = "string"
+                  }
                 }
                 destination_service_accounts = {
                   description = "Destination service accounts."
-                  type         = "string"
+                  type        = "array"
+                  items = {
+                    type = "string"
+                  }
                 }
                 allow = {
                   description = "Allow list."
