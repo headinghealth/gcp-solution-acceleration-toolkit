@@ -15,6 +15,7 @@ limitations under the License. */ -}}
 {{range get . "compute_networks"}}
 {{$resource_name := resourceName . "name" -}}
 {{$has_secondary_ranges := false -}}
+{{$has_firewall_rules := false -}}
 
 module "{{$resource_name}}" {
   source  = "terraform-google-modules/network/google"
@@ -36,6 +37,10 @@ module "{{$resource_name}}" {
     {{- if has . "secondary_ranges"}}
     {{- $has_secondary_ranges = true}}
     {{- end}}
+
+    {{- if has . "firewall_rules"}}
+    {{- $has_firewall_rules = true}}
+    {{- end}}
     {{- end}}
   ]
 
@@ -54,6 +59,51 @@ module "{{$resource_name}}" {
     {{- end}}
     {{- end}}
   }
+  {{- end}}
+
+  {{- if $has_firewall_rules}}
+  firewall_rules = [
+    {{- range .firewall_rules}}
+    {
+      name                    = "{{.name}}"
+      description             = "{{.description}}"
+      direction               = "{{.direction}}"
+      priority                = "{{.priority}}"
+      ranges                  = "{{.ranges}}"
+      source_tags             = "{{.source_tags}}"
+      source_service_accounts = "{{.source_service_accounts}}"
+      target_tags             = "{{.target_tags}}"
+      target_service_accounts = "{{.target_service_accounts}}"
+      allow = [
+      {{- range .allow}}
+        {
+          protocol = "{{.protocol}}"
+          ports    = [
+            {{- range .ports}}
+            "{{.port}}",
+            {{- end}}
+          ]
+        }
+      {{- end}}
+      ]
+      deny = [
+      {{- range .deny}}
+        {
+          protocol = "{{.protocol}}"
+          ports    = [
+            {{- range .ports}}
+            "{{.port}}",
+            {{- end}}
+          ]
+        }
+      {{- end}}
+      ]
+      log_config = {
+        metadata = "{{.log_config_metadata}}"
+      }
+    },
+    {{- end}}
+  ]
   {{- end}}
 }
 

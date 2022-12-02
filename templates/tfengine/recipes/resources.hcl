@@ -495,6 +495,114 @@ schema = {
             type        = "object"
             additionalProperties = false
           }
+          firewall_rules = {
+            description = "Firewall rules."
+            type        = "array"
+            items = {
+              type                 = "object"
+              additionalProperties = true
+              required = [
+                "name",
+                "direction",
+                "ranges",
+              ]
+              properties = {
+                name = {
+                  description = "Name of firewall."
+                  type        = "string"
+                }
+                description = {
+                  description = "Description of firewall."
+                  type        = "string"
+                }
+                direction = {
+                  description = "EGRESS or INGRESS."
+                  type         = "string"
+                }
+                priority = {
+                  description = "Priority."
+                  type         = "string"
+                }
+                ranges = {
+                  description = "IP ranges."
+                  type        = "array"
+                  items = {
+                    type = "string"
+                  }
+                }
+                source_tags = {
+                  description = "Source tags."
+                  type         = "string"
+                }
+                source_service_accounts = {
+                  description = "Source service accounts."
+                  type         = "string"
+                }
+                destination_tags = {
+                  description = "Destination tags."
+                  type         = "string"
+                }
+                destination_service_accounts = {
+                  description = "Destination service accounts."
+                  type         = "string"
+                }
+                allow = {
+                  description = "Allow list."
+                  type        = "array"
+                  items = {
+                    type                 = "object"
+                    additionalProperties = false
+                    required = [
+                      "protocol",
+                      "ports"
+                    ]
+                    properties = {
+                      protocol = {
+                        description = "Protocol."
+                        type        = "string"
+                      }
+                      ports = {
+                        description = "Ports."
+                        type        = "array"
+                        items = {
+                          type = "string"
+                        }
+                      }
+                    }
+                  }
+                }
+                deny = {
+                  description = "Deny list."
+                  type        = "array"
+                  items = {
+                    type                 = "object"
+                    additionalProperties = false
+                    required = [
+                      "protocol",
+                      "ports"
+                    ]
+                    properties = {
+                      protocol = {
+                        description = "Protocol."
+                        type        = "string"
+                      }
+                      ports = {
+                        description = "Ports."
+                        type        = "array"
+                        items = {
+                          type = "string"
+                        }
+                      }
+                    }
+                  }
+                }
+                log_config_metadata = {
+                  description = "Log config metadata."
+                  type         = "string"
+                }
+              }
+            }
+          }
         }
       }
     }
