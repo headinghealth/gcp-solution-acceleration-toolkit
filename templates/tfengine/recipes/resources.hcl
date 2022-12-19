@@ -329,6 +329,10 @@ schema = {
             description = "Family of compute image to use."
             type        = "string"
           }
+          machine_type = {
+            description = "Type of machine to use."
+            type        = "string"
+          }
           disk_type = {
             description = "Type of disk to use for the instance template."
             type        = "string"
