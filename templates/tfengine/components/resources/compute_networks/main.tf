@@ -113,6 +113,28 @@ module "{{$resource_name}}" {
   {{- end}}
 }
 
+{{- if has . "serverless_connectors"}}
+{{- range .serverless_connectors}}
+module "{{$resource_name}}_{{.name}}" {
+  source     = "terraform-google-modules/network/google//modules/vpc-serverless-connector-beta"
+  project_id = module.project.project_id
+  vpc_connectors = [{
+      name        = "{{.name}}"
+      region      = "{{get . "compute_region" $.compute_region}}"
+      subnet_name = module.{{$resource_name}}.subnets["{{get . "compute_region" $.compute_region}}/{{.subnet_name}}"].name
+      host_project_id = module.project.project_id
+      machine_type  = "{{.machine_type}}"
+      min_instances = "{{.min_instances}}"
+      max_instances = "{{.max_instances}}"
+    }
+  ]
+  depends_on = [
+    module.project
+  ]
+}
+{{- end}}
+{{- end}}
+
 {{- if has . "cloud_sql_private_service_access"}}
 module "cloud_sql_private_service_access_{{$resource_name}}" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/private_service_access"

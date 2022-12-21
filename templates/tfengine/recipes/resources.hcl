@@ -619,6 +619,40 @@ schema = {
               }
             }
           }
+          serverless_connectors = {
+            description = "serverless_connectors"
+            type        = "array"
+            items = {
+              type                 = "object"
+              additionalProperties = false
+              required = [
+                "name",
+                "subnet_name",
+              ]
+              properties = {
+                name = {
+                  description = "Name of connector."
+                  type        = "string"
+                }
+                subnet_name = {
+                  description = "Name of subnet to use."
+                  type        = "string"
+                }
+                machine_type = {
+                  description = "Machine type of instance to be used by connector."
+                  type        = "string"
+                }
+                min_instances = {
+                  description = "Min instances to be used by connector."
+                  type        = "integer"
+                }
+                max_instances = {
+                  description = "Max instances to be used by connector."
+                  type        = "integer"
+                }
+              }
+            }
+          }
         }
       }
     }
