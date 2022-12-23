@@ -115,22 +115,27 @@ module "{{$resource_name}}" {
 
 {{- if has . "serverless_connectors"}}
 {{- range .serverless_connectors}}
-module "{{$resource_name}}_{{.name}}" {
-  source     = "terraform-google-modules/network/google//modules/vpc-serverless-connector-beta"
-  project_id = module.project.project_id
-  vpc_connectors = [{
-      name        = "{{.name}}"
-      region      = "{{get . "compute_region" $.compute_region}}"
-      subnet_name = module.{{$resource_name}}.subnets["{{get . "compute_region" $.compute_region}}/{{.subnet_name}}"].name
-      host_project_id = module.project.project_id
-      machine_type  = "{{.machine_type}}"
-      min_instances = "{{.min_instances}}"
-      max_instances = "{{.max_instances}}"
-    }
-  ]
+resource "google_vpc_access_connector" "{{$resource_name}}_{{.name}}" {
+  provider = google-beta
+  project  = module.project.project_id
+  name     = "{{.name}}"
+  region   = "{{get . "compute_region" $.compute_region}}"
+  subnet {
+    name        = module.{{$resource_name}}.subnets["{{get . "compute_region" $.compute_region}}/{{.subnet_name}}"].name
+    project_id  = module.project.project_id
+  }
+  machine_type  = "{{.machine_type}}"
+  min_instances = "{{.min_instances}}"
+  max_instances = "{{.max_instances}}"
+
   depends_on = [
     module.project
   ]
+  lifecycle {
+    ignore_changes = [
+      network,
+    ]
+  }
 }
 {{- end}}
 {{- end}}
