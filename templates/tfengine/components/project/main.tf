@@ -74,7 +74,7 @@ module "project" {
 }
 {{- end}}
 
-{{- if has . "allowed_policy_member_customer_ids"}}
+{{- if or (has . "allowed_policy_member_customer_ids") (has . "allowed_policy_member_domains")}}
 # Cloud Identity and Access Management
 module "orgpolicy_iam_allowed_policy_member_domains" {
   source  = "terraform-google-modules/org-policy/google"
@@ -85,8 +85,13 @@ module "orgpolicy_iam_allowed_policy_member_domains" {
 
   constraint        = "constraints/iam.allowedPolicyMemberDomains"
   policy_type       = "list"
+  {{- if has . "allowed_policy_member_customer_ids"}}
   allow             = {{hcl .allowed_policy_member_customer_ids}}
   allow_list_length = length({{hcl .allowed_policy_member_customer_ids}})
+  {{- end}}
+  {{- if has . "allowed_policy_member_domains"}}
+  enforce           = {{hcl .allowed_policy_member_domains}}
+  {{- end}}
 }
 {{- end}}
 

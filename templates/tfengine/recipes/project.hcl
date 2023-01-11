@@ -154,6 +154,12 @@ schema = {
             type = "string"
           }
         }
+        allowed_policy_member_domains = {
+          description = <<EOF
+            Must be specified to disable allowed_policy_member_domains, this is used instead of setting specific customer ids
+          EOF
+          type        = "boolean"
+        }
         disable_service_account_key_creation = {
           description = <<EOF
             Must be specified to change the default policy of service account keys creation.
