@@ -229,11 +229,11 @@ schema = {
             type        = "string"
             pattern = "^mysql$"
           }
-          cloud_sql_region = {
+          region = {
             description = "Region to create cloud sql instance in. Can be defined in global data block."
             type        = "string"
           }
-          cloud_sql_zone = {
+          zone = {
             description = "Zone to reate cloud sql instance in. Can be defined in global data block."
             type        = "string"
           }
