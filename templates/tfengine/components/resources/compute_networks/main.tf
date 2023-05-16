@@ -143,7 +143,7 @@ resource "google_vpc_access_connector" "{{$resource_name}}_{{.name}}" {
 {{- if has . "cloud_sql_private_service_access"}}
 module "cloud_sql_private_service_access_{{$resource_name}}" {
   source  = "GoogleCloudPlatform/sql-db/google//modules/private_service_access"
-  version = "~> 4.5.0"
+  version = "~> 15.0.0"
 
   project_id  = module.project.project_id
   vpc_network = module.{{$resource_name}}.network_name
